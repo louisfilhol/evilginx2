@@ -36,11 +36,11 @@ services:
     
     # Health check
     healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "443"]
+      test: ["CMD", "test", "-f", "./evilginx"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 10s
 
 volumes:
   evilginx_data:
