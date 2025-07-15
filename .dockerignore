@@ -1,5 +1,35 @@
-Dockerfile
-Makefile
+# Git files
+.git
+.gitignore
+.github
+
+# Documentation
 README.md
 LICENSE
+CHANGELOG
+ISSUE_TEMPLATE.md
 media
+
+# Development files
+Makefile
+build.bat
+build_run.bat
+.travis.yml
+
+# Build artifacts
+build/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp

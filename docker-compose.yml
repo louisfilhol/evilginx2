@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  evilginx:
+    build: .
+    container_name: evilginx2
+    restart: unless-stopped
+    
+    ports:
+      - "53:53/udp"  # DNS
+      - "80:80"      # HTTP
+      - "443:443"    # HTTPS
+    
+    volumes:
+      # Persist configuration and data
+      - evilginx_data:/app/data
+      - evilginx_crt:/app/crt
+      # Optional: Mount custom phishlets
+      # - ./custom_phishlets:/app/phishlets
+      # Optional: Mount custom redirectors
+      # - ./custom_redirectors:/app/redirectors
+    
+    environment:
+      - EVILGINX_CONFIG_DIR=/app/data
+      - EVILGINX_PHISHLETS_DIR=/app/phishlets
+      - EVILGINX_REDIRECTORS_DIR=/app/redirectors
+    
+    # Required for proper DNS resolution
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "443"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  evilginx_data:
+    driver: local
+  evilginx_crt:
+    driver: local
