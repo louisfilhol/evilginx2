@@ -50,10 +50,16 @@ echo -e "${RED}This tool is for authorized penetration testing only!${NC}"
 echo -e "${RED}Unauthorized use may be illegal in your jurisdiction.${NC}"
 echo ""
 
-# Start Evilginx2
-echo -e "${GREEN}Starting Evilginx2 with the following configuration:${NC}"
-echo "Command: ./evilginx -c \"$CONFIG_DIR\" -p \"$PHISHLETS_DIR\" -t \"$REDIRECTORS_DIR\" $@"
+# Container ready for manual execution
+echo -e "${GREEN}Container is ready!${NC}"
+echo -e "${GREEN}To start Evilginx2, run:${NC}"
+echo "./evilginx -c \"$CONFIG_DIR\" -p \"$PHISHLETS_DIR\" -t \"$REDIRECTORS_DIR\""
+echo ""
+echo -e "${GREEN}Or use the environment variables:${NC}"
+echo "EVILGINX_CONFIG_DIR=$CONFIG_DIR"
+echo "EVILGINX_PHISHLETS_DIR=$PHISHLETS_DIR"
+echo "EVILGINX_REDIRECTORS_DIR=$REDIRECTORS_DIR"
 echo ""
 
-# Execute the main application
-exec ./evilginx -c "$CONFIG_DIR" -p "$PHISHLETS_DIR" -t "$REDIRECTORS_DIR" "$@"
+# Keep container running
+exec tail -f /dev/null
