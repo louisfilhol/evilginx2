@@ -36,6 +36,10 @@ WORKDIR /app
 # Copy binary from builder stage
 COPY --from=builder /app/evilginx .
 
+# Copy startup script
+COPY docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
+
 # Copy necessary directories
 COPY --chown=evilginx:evilginx phishlets ./phishlets
 COPY --chown=evilginx:evilginx redirectors ./redirectors
@@ -64,4 +68,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD nc -z localhost 443 || exit 1
 
 # Default command
-CMD ["./evilginx", "-c", "/app/data", "-p", "/app/phishlets", "-t", "/app/redirectors"]
+CMD ["./docker-entrypoint.sh"]
